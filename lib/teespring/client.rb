@@ -31,8 +31,6 @@ module Teespring
       @response = get '/seller/v1/campaigns', { access_token: @access_token, search: search, states: states, page: 1, per_page: 100 }
     end
 
-    private
-
     def get(url, params)
       request(:get, url, params)
     end
@@ -40,6 +38,8 @@ module Teespring
     def post(url, params)
       request(:post, url, params)
     end
+
+    private
 
     def request(method, url, params)
       response = connection.send(method, url, params)

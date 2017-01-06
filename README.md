@@ -20,7 +20,42 @@ Or install it yourself as:
 
 ## Usage
 
-In order to use this gem you must obtain an `app_id` from [Teespring](https://teespring.com/support). 
+In order to use this gem you must obtain an `app_id` from [Teespring](https://teespring.com/help). 
+
+Create a client:
+
+```ruby
+client = Teespring::Client.new(app_id: "APP_ID_YOU_REQUESTED_FROM_TEESPRING")
+```
+
+Authenticate (this will create a new access token):
+
+```ruby
+token = client.authenticate("youremail@example.com", "yourpassword")
+```
+
+Alternatively, if you already have an access token you can create the client with the token directly:
+
+```ruby
+client = Teespring::Client.new(app_id: "APP_ID_YOU_REQUESTED_FROM_TEESPRING", access_token: "YOUR_ACCESS_TOKEN")
+```
+
+Once the client is authenticated you can retrieve information about the authenticated (via the access token) user:
+
+```ruby
+response = client.me
+response.body
+=> {"users"=>[{"id"=>12345, "email"=>"youremail@example.com"}]}
+
+```
+
+You can also retrieve a list of campaigns:
+
+```ruby
+response = client.campaigns(nil, "active")
+```
+
+Additional endpoints and details are available in the [Teespring Documentation](https://api.teespring.com/docs). Additional endpoints can be accessed directly through the `client.get` and `client.post` methods.
 
 ## Development
 
@@ -30,10 +65,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## TODO
 
-* `Teespring.authenticate` (email, password, uid)
-* `Teespring.configure` (access_token)
-* `Teespring::Client`
-* Campaigns
+* More Endpoints and response specific adapters
 * Rate limiting
 * Pagination
 * Auto-pagination
